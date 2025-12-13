@@ -1,1 +1,5 @@
 Python -m pip install opencv-Python
+pip install cmake
+pip install dlib
+    for dlib visual studio c++ build tools required
+pip install face_recognition
