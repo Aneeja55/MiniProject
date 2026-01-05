@@ -72,7 +72,7 @@ def detect_face_frames():
         if not file_path.lower().endswith(('.jpg', '.png', '.jpeg')):
             continue
         image=face_recognition.load_image_file(file_path)
-        face_loacations=face_recognition.face_locations(image,number_of_times_to_upsample=2, model=detect_method)
+        face_loacations=face_recognition.face_locations(image,number_of_times_to_upsample=1, model=detect_method)
         if len(face_loacations) == 0:
             shutil.move(file_path, BadFrame_path)
             delete_count += 1
