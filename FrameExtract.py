@@ -11,7 +11,7 @@ data_dir = os.path.join(script_dir, 'Data')
 video_path = os.path.join(script_dir, 'Videos', 'TestVideo2.mp4')
 BadFrame_path = os.path.join(script_dir, 'BadFrames')
 Scale_factor = 0.25
-detect_method='hog'
+detect_method='cnn'
 
 # Clear/Create data directory
 def dir_setup():
@@ -73,11 +73,26 @@ def process_frame_worker(file_info):
             return 'error'
         small_frame=cv2.resize(img,(0,0),fx=Scale_factor,fy=Scale_factor)
         small_frame_rgb=cv2.cvtColor(small_frame,cv2.COLOR_BGR2RGB)
-        face_location=face_recognition.face_locations(small_frame_rgb,model='hog')
+        face_location=face_recognition.face_locations(small_frame_rgb,model=detect_method)
         if len(face_location)==0:
             shutil.move(file_path,os.path.join(bad_dir,filename))
             return 'moved'
         else:
+            for i,face_loc in enumerate(face_location):
+                person_folder=os.path.join(source_dir,f"person_{i}")
+                if not os.path.exists(person_folder):
+                    os.makedirs(person_folder)
+                top,right,bottom,left=face_loc # Get Coordinates
+                # Rescale to original
+                top=int(top/Scale_factor) 
+                right=int(right/Scale_factor)
+                bottom=int(bottom/Scale_factor) 
+                left=int(left/Scale_factor)
+                face_crop=img[top:bottom,left:right] # Cropping face
+                face_crop=cv2.resize(face_crop,(224,224)) # Resize to std size
+                save_path=os.path.join(person_folder,filename)
+                cv2.imwrite(save_path,face_crop)
+            os.remove(file_path)
             return 'kept'
     except Exception as e:
         print(f"Error processing frame {filename}: {str(e)}")

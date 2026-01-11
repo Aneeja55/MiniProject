@@ -1,3 +1,2 @@
-Dependencies required:
-    1. pip install python
-    2. pip install mediapipe
+Deepfake Video Detection.
+Refer Pre_Installs.txt to download all necessary prerequisites.
