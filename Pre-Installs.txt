@@ -3,3 +3,10 @@ pip install cmake
 pip install dlib
     for dlib visual studio c++ build tools required
 pip install face_recognition
+
+dl model
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+pip install timm
+
+data representation
+pip install numpy pandas scikit-learn tqdm
