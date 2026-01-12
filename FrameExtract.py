@@ -11,7 +11,7 @@ data_dir = os.path.join(script_dir, 'Data')
 video_path = os.path.join(script_dir, 'Videos', 'TestVideo2.mp4')
 BadFrame_path = os.path.join(script_dir, 'BadFrames')
 Scale_factor = 0.25
-detect_method='cnn'
+detect_method='hog'
 
 # Clear/Create data directory
 def dir_setup():
